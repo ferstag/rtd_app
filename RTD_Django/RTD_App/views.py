@@ -9,7 +9,7 @@ def catalogo(request):
     stock_total = Producto.objects.aggregate(Sum("stock"))
     mayor_precio = Producto.objects.aggregate(Max("precio"))
     data = {
-        'producto':productos,
+        'productos':productos,
         'stock_total': stock_total['stock__sum'],
         'mayor_precio': mayor_precio['precio__max'],
     }

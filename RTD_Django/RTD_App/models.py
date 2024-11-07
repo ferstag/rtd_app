@@ -5,7 +5,7 @@ class Producto(models.Model):
     descripcion = models.TextField(max_length=255)
     precio = models.IntegerField()
     stock = models.IntegerField()
-    imagen = models.ImageField(upload_to='productos/')
+    imagen = models.ImageField(upload_to='productos')
 
 class Pedido(models.Model):
     nombre_cliente = models.CharField(max_length=50)
