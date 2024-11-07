@@ -5,23 +5,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Catálogo de productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Catálogo de productos</h1>
-    <div class="productos">
-        {% for producto in productos %}
-            <div class="producto-card">
-                <h2>{{ producto.nombre }}</h2>
-                <img class="card-img-top" src="media/{{ producto.imagen }}" alt="Title">
-                <p>{{ producto.descripcion }}</p>
-                <p>Precio: ${{ producto.precio }}</p>
-                <button>Añadir al carrito</button>
-            </div>
-        {% endfor %}
+<body style="background-image: url('{% static 'images/foto_fondo.jpg' %}'); background-size: cover; background-position: center; height: 100vh;">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 text-light">Catálogo de productos</h1>
+        <div class="row">
+            {% for producto in productos %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 text-center d-flex flex-column justify-content-between">
+                        <!-- Image with overlay trigger -->
+                        <img src="/media/{{ producto.imagen }}" 
+                             class="card-img-top" 
+                             alt="Imagen de {{ producto.nombre }}" 
+                             data-bs-toggle="modal" 
+                             data-bs-target="#productoModal{{ producto.id }}" 
+                             style="cursor: pointer;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ producto.nombre }}</h5>
+                            <p class="card-text">{{ producto.descripcion|truncatewords:15 }}</p>
+                            <p class="card-text fw-bold">Precio: ${{ producto.precio }}</p>
+                            <a href="#" class="btn btn-primary">Añadir al carrito</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="productoModal{{ producto.id }}" tabindex="-1" aria-labelledby="productoModalLabel{{ producto.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="productoModalLabel{{ producto.id }}">{{ producto.nombre }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="/media/{{ producto.imagen }}" class="img-fluid mb-4" alt="Imagen de {{ producto.nombre }}">
+                                <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+                                <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+                                <p><strong>Stock:</strong> {{ producto.stock }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <a href="#" class="btn btn-primary">Añadir al carrito</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
 
 
