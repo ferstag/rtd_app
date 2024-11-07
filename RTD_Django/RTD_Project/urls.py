@@ -20,6 +20,5 @@ from RTD_App import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.catalogo,)
-    path()
+    path('', views.catalogo)
 ]
