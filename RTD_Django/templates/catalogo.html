@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +12,15 @@
     <div class="productos">
         {% for producto in productos %}
             <div class="producto-card">
-                <img src="{% static 'images/producto1.jpg' %}" alt="{{ producto.nombre }}">
                 <h2>{{ producto.nombre }}</h2>
+                <img class="card-img-top" src="media/{{ producto.imagen }}" alt="Title">
                 <p>{{ producto.descripcion }}</p>
                 <p>Precio: ${{ producto.precio }}</p>
                 <button>Añadir al carrito</button>
             </div>
         {% endfor %}
     </div>
-
+    
 </body>
 </html>
 
