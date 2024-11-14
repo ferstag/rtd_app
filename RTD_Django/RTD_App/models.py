@@ -12,3 +12,12 @@ class Pedido(models.Model):
     email = models.EmailField()
     telefono_cliente = models.PositiveIntegerField()
     comentario = models.TextField(max_length=200)
+
+class Carrito(models.Model):
+    item = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    subtotal = models.PositiveIntegerField()
+    total = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"Total Carrito: ${self.total}" 
