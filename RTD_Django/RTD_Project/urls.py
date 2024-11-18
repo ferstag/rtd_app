@@ -24,8 +24,16 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.catalogo,),
+    path('', views.catalogo, name='catalogo'),
+    path('agregar/<int:producto_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
+    path('eliminar/<int:producto_id>/', views.eliminar_del_carrito, name='eliminar_del_carrito'),
+    path('carrito/', views.carrito, name='carrito'),
+    path('confirmar/', views.confirmar_compra, name='confirmar_compra'),
+    path('modificar/<int:producto_id>/', views.modificar_cantidad, name='modificar_cantidad'),
+    path('vaciar/', views.vaciar_carrito, name='vaciar_carrito'),
+    path('voucher/', views.generar_voucher, name='generar_voucher'),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += [
