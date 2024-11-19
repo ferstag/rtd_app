@@ -15,9 +15,10 @@ class Pedido(models.Model):
 
 class Carrito(models.Model):
     item = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    session_id = models.CharField(max_length=255, unique=False, null=False, blank=False)
     cantidad = models.PositiveIntegerField()
     subtotal = models.PositiveIntegerField()
     total = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"Total Carrito: ${self.total}" 
+        return f"Carrito ID: {self.session_id} | Producto: {self.item.nombre} | Cantidad: {self.cantidad}"

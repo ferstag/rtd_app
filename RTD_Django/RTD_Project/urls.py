@@ -24,14 +24,16 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.catalogo, name='catalogo'),
+    path('catalogo/', views.catalogo, name='catalogo'),
+    path('', views.landingPage, name='landing'),
     path('agregar/<int:producto_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
     path('eliminar/<int:producto_id>/', views.eliminar_del_carrito, name='eliminar_del_carrito'),
-    path('carrito/', views.carrito, name='carrito'),
+    path('carrito/<str:carrito_id>/', views.carrito, name='carrito'),
     path('confirmar/', views.confirmar_compra, name='confirmar_compra'),
     path('modificar/<int:producto_id>/', views.modificar_cantidad, name='modificar_cantidad'),
-    path('vaciar/', views.vaciar_carrito, name='vaciar_carrito'),
-    path('voucher/', views.generar_voucher, name='generar_voucher'),
+    path('vaciar/<str:carrito_id>/', views.vaciar_carrito, name='vaciar_carrito'),
+    path('voucher/<carrito_id>', views.generar_voucher, name='generar_voucher'),
+    path('formulario/', views.formulario, name='formulario'),
 ]
 
 
