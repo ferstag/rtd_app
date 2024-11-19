@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +8,13 @@
     <title>Voucher de Compra</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body style="background-color: #f8f9fa;">
+<body style="background-image: url('{% static 'images/foto_fondo.jpg' %}'); background-size: cover; background-position: center; height: 100vh;">
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Voucher de Compra</h1>
+        <h1 class="text-center mb-4 text-white">Voucher de Compra</h1>
         
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Resumen de compra</h5>
+                <h5 class="card-title text-white">Resumen de compra</h5>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -43,7 +45,7 @@
         </div>
         
         <div class="text-center mt-4">
-            <p>Gracias por su compra. Su pedido ha sido procesado con éxito.</p>
+            <p class="text-white">Gracias por su compra. Su pedido ha sido procesado con éxito.</p>
             <a href="{% url 'catalogo' %}" class="btn btn-primary">Volver al catálogo</a>
         </div>
     </div>

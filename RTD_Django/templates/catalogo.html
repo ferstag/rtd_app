@@ -29,7 +29,7 @@
                             <p class="card-text fw-bold">Precio: ${{ producto.precio }}</p>
 
                             <!-- Form to add product to cart -->
-                            <form action="{% url 'agregar_al_carrito' producto.id %}" method="post">
+                            <form action="{% url 'agregar_al_carrito' producto.id %}?carrito_id={{ carrito_id }}" method="post">
                                 {% csrf_token %}
                                 <div class="mb-2">
                                     <label for="cantidad_{{ producto.id }}" class="form-label">Cantidad</label>
