@@ -42,7 +42,7 @@
             <!-- Opciones adicionales del carrito -->
             <div class="mt-3">
                 <a href="{% url 'vaciar_carrito' carrito_id=carrito_id %}" class="btn btn-danger">Vaciar carrito</a>
-                <a href="{% url 'generar_voucher' carrito_id %}" class="btn btn-success">Confirmar Compra</a>
+                <a href="{% url 'generar_voucher' carrito_id=carrito_id %}" class="btn btn-success">Confirmar Compra</a>
                 <a href="{% url 'catalogo' %}" class="btn btn-success">Agregar más productos</a>
             </div>
         {% else %}

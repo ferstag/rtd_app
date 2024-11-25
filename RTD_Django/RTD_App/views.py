@@ -18,10 +18,6 @@ def catalogo(request):
 
 
 def agregar_al_carrito(request, producto_id):
-    from django.shortcuts import render, redirect, get_object_or_404
-    from django.contrib import messages
-    from .models import Producto, Carrito
-
     producto = get_object_or_404(Producto, id=producto_id)
     cantidad = int(request.POST.get('cantidad', 1))
 
@@ -128,8 +124,7 @@ def confirmar_compra(request):
 
 # Generate Voucher
 def generar_voucher(request, carrito_id):
-    # Buscar el carrito utilizando el session_id
-    carrito_items = Carrito.objects.filter(session_id=carrito_id)  # Usar session_id para el filtro
+    carrito_items = Carrito.objects.filter(session_id=carrito_id)
     if not carrito_items:
         messages.error(request, "Carrito no encontrado.")
         return redirect('carrito')
@@ -138,8 +133,10 @@ def generar_voucher(request, carrito_id):
 
     return render(request, 'voucher.html', {
         'carrito_items': carrito_items,
-        'total': total
+        'total': total,
+        'carrito_id': carrito_id  # Asegúrate de pasar carrito_id aquí
     })
+
 
 
 
@@ -155,3 +152,10 @@ def formulario(request):
 
 def landingPage(request):
     return render(request, 'landing.html')
+
+def volver_al_catalogo(request, carrito_id):
+    # Vaciar el carrito de compras en la sesión
+    Carrito.objects.filter(session_id=carrito_id).delete()
+    messages.success(request, "Carrito vacío.")
+    # Redirige al catálogo
+    return redirect('catalogo')  # 'catalogo' debe ser el nombre de tu URL de catálogo
