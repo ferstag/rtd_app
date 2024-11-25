@@ -59,10 +59,19 @@ def agregar_al_carrito(request, producto_id):
 
 # Remove Product from Cart
 def eliminar_del_carrito(request, producto_id):
-    carrito_item = get_object_or_404(Carrito, item_id=producto_id)
+    # Verifica que el usuario tenga una sesión activa
+    if not request.session.session_key:
+        messages.error(request, "No se encontró una sesión activa.")
+        return redirect('catalogo')
+
+    # Filtra por session_id y item_id para obtener el carrito específico
+    session_id = request.session.session_key
+    carrito_item = get_object_or_404(Carrito, item_id=producto_id, session_id=session_id)
+
     carrito_item.delete()
     messages.success(request, "Producto eliminado del carrito.")
-    return redirect('carrito')
+    return redirect('carrito', carrito_id=session_id)
+
 
 # View Cart
 def carrito(request, carrito_id):
@@ -72,18 +81,6 @@ def carrito(request, carrito_id):
         'carrito_items': carrito_items,
         'total': total,
         'carrito_id': carrito_id  # Asegura que el ID del carrito esté en el contexto
-    })
-
-
-
-    # Obtener los elementos del carrito
-    carrito_items = Carrito.objects.filter(id=carrito.id)
-    total = sum(item.subtotal for item in carrito_items)
-
-    return render(request, 'carrito.html', {
-        'carrito_items': carrito_items,
-        'total': total,
-        'carrito_id': carrito.id
     })
 
 
@@ -114,21 +111,14 @@ def vaciar_carrito(request, carrito_id):
     return redirect('carrito', carrito_id=carrito_id)
 
 
+
 # Confirm Purchase
 def confirmar_compra(request):
     carrito_items = Carrito.objects.all()
     if not carrito_items:
         messages.error(request, "El carrito está vacío.")
         return redirect('carrito')
-    
-    # Create order
-    #pedido = Pedido.objects.create(
-        #nombre_cliente=request.POST.get('nombre_cliente'),
-        #email=request.POST.get('email'),
-        #telefono_cliente=request.POST.get('telefono_cliente'),
-        #comentario=request.POST.get('comentario', '')
-    #)
-    
+
     for item in carrito_items:
         pedido.productos.add(item.item)  # Assuming Pedido has a ManyToManyField to Producto
     
